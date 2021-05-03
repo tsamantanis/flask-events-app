@@ -1,0 +1,57 @@
+{% extends 'home.html' %}
+{% block home_content %}
+
+<div class="calendar_container">
+    {% for user in user_list %}
+        <div class="user_container">
+            <a href={{"/edit_user/" + user.id}}>
+                <h2 class="text-white">{{user.first_name + " " + user.last_name}} <i class="fas fa-pencil-alt float-right color-gray"></i></h2>
+            </a>
+                {% for key, value in user.events.items() %}
+                    {% if value == "" %}
+                        <a href={{"/new_event/" + user.id + "/" + date_full + "/" + key}}>
+                            <div class="event_space">
+                                <h4>Add Event</h4>
+                            </div>
+                        </a>
+                    {% else %}
+                        <a href={{"/edit_event/" + value.id | string()}}>
+                            <div class="event_container" style="background: {{value.color}}">
+                                <div>
+                                    <h3>{{value.title}}</h3>
+                                    <p>
+                                        {{value.details}}
+                                    </p>
+                                    <p>
+                                        {{value.timeslot}}
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <div class="user_container">
+        <h2>Actions</h2>
+        {% if not is_empty %}
+            <a href={{"/get_calendar/" + date_next }}>
+                <div class="action_space border-green">
+                    <h4>Next Day</h4>
+                </div>
+            </a>
+            <a href={{"/get_calendar/" + date_prev }}>
+                <div class="action_space border-green">
+                    <h4>Previous Day</h4>
+                </div>
+            </a>
+        {% endif %}
+        <a href="/new_user">
+            <div class="action_space border-blue">
+                <h4>Add user</h4>
+            </div>
+        </a>
+    </div>
+</div>
+
+{% endblock home_content %}
