@@ -1,8 +1,5 @@
-from sqlalchemy_utils import URLType
-
-from grocery_app import db
-from grocery_app.utils import FormEnum
 from flask_login import UserMixin
+from app import db
 
 class Event(db.Model):
     """Event model."""
