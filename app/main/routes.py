@@ -12,6 +12,14 @@ def home():
 @main.route('/get_calendar/<date_input>')
 def get_calendar(date_input):
     """Returns current state of the calendar"""
+    # users = database.users.find()
+    # user_list = []
+    # for user in users:
+    #     a_user = user(user['first_name'], user['last_name'], user['email'])
+    #     id = user['_id']
+    #     a_user.set_id(str(id))
+    #     a_user.get_events(date_input)
+    #     user_list.append(a_user)
     month_range = calendar.monthrange(int(date_input[0:4]), int(date_input[5:7]))
     prev_month_range = calendar.monthrange(int(date_input[0:4]), int(date_input[5:7]) - 1)
     date_current = date(int(date_input[0:4]), int(date_input[5:7]), int(date_input[8:10]))
