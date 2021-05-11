@@ -1,7 +1,7 @@
 from flask import Blueprint, request, redirect, render_template, url_for
 from datetime import date, datetime, timedelta
 import calendar
-from app.models import User, Event
+from app.models import Equipment, User, Event
 
 main = Blueprint('main', __name__)
 timeslots = [
@@ -18,17 +18,39 @@ def home():
 @main.route('/get_calendar/<date_input>')
 def get_calendar(date_input):
     """Returns current state of the calendar"""
-    users = User.query.all()
-    print(users)
+    events = Event.query.all()
+    equipment = Equipment.query.all()
     month_range = calendar.monthrange(int(date_input[0:4]), int(date_input[5:7]))
     prev_month_range = calendar.monthrange(int(date_input[0:4]), int(date_input[5:7]) - 1)
     date_current = date(int(date_input[0:4]), int(date_input[5:7]), int(date_input[8:10]))
     date_next = date(int(date_input[0:4]), int(date_input[5:7]), int(date_input[8:10]) + 1 if int(date_input[8:10]) < month_range[1] else 1)
     date_prev = date(int(date_input[0:4]), int(date_input[5:7]), int(date_input[8:10]) - 1 if int(date_input[8:10]) > 1 else prev_month_range[1])
+    all_equipment = []
+    if len(equipment) == 0:
+        equipment = [
+            {
+                "id": 1,
+                "name": "Wow",
+                "quantity": 7
+            },
+            {
+                "id": 2,
+                "name": "Woa",
+                "quantity": 12
+            },
+        ]
+    for item in equipment:
+        temp = Equipment(
+            name = item['name'], 
+            quantity = item['quantity'],
+        )
+        temp.id = str(item['id'])
+        temp.events = temp.get_events(date_input)
+        all_equipment.append(temp)
     context = {
         "timeslots": timeslots,
-        "is_empty": len(users) == 0,
-        "user_list": users,
+        "is_empty": len(all_equipment) == 0,
+        "all_equipment": all_equipment,
         "date": str(date_current.month) + "/" + str(date_current.day),
         "date_full": date_input,
         "date_next": date_next.strftime('%Y-%m-%d'),

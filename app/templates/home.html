@@ -10,6 +10,7 @@
                 <h4>Logout</h4>
             </div>
         </a>
+        {% block home_content %}{% endblock %}
     {% else %}
         <a href="/signup">
             <div class="action_space border-blue">
@@ -22,7 +23,6 @@
             </div>
         </a>
     {% endif %}
-    {% block home_content %}{% endblock %}
 </main>
 
 {% endblock content %}

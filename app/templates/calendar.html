@@ -2,11 +2,12 @@
 {% block home_content %}
 
 <div class="calendar_container">
-    {% for user in users %}
+    {% for item in all_equipment %}
         <div class="user_container">
-            {% for key, value in user.events.items() %}
+            <h2 class="text-white">{{item.name}} <i class="fas fa-pencil-alt float-right color-gray"></i></h2>
+            {% for key, value in item.events.items() %}
                 {% if value == "" %}
-                    <a href={{"/new_event/" + str(user.id) + "/" + date_full + "/" + key}}>
+                    <a href={{"/new_event/" + item.id + "/" + date_full + "/" + key}}>
                         <div class="event_space">
                             <h4>Add Event</h4>
                         </div>
@@ -17,7 +18,7 @@
                             <div>
                                 <h3>{{value.title}}</h3>
                                 <p>
-                                    {{value.details}}
+                                    Quantity: {{item.quantity}}
                                 </p>
                                 <p>
                                     {{value.timeslot}}
