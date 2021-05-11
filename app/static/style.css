@@ -8,18 +8,29 @@
     --red: #D93535;
 }
 
-body {
+body, main {
     background-color: var(--dark-gray) !important;
     color: white !important;
-    padding-left: 2vh;
-    padding-right: 2vh;
-    padding-top: 1vh;
-    padding-bottom: 1vh;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 a {
     text-decoration: none !important;
 }
+
+form, .d-flex {
+    display: flex;
+    flex-direction: column;
+}
+
+.d-block {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
 
 label {
     font-family: "Roboto", sans-serif;
@@ -33,7 +44,7 @@ input {
     border: none;
     box-sizing: border-box;
     border-radius: 10px;
-    min-height: 3vh;
+    min-height: 3rem;
     color: white !important;
     outline: none;
     padding: 5px 5px 5px 10px;

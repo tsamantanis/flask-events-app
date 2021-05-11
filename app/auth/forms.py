@@ -4,7 +4,7 @@ from wtforms import (
     SubmitField,
     PasswordField
 )
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired, Length, ValidationError
 from app.models import User
 
 class SignUpForm(FlaskForm):

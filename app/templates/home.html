@@ -4,6 +4,24 @@
 
 <main>
     <h1>Calendar {{ date }}</h1>
+    {% if current_user.is_authenticated %}
+        <a href="/logout">
+            <div class="action_space border-blue">
+                <h4>Logout</h4>
+            </div>
+        </a>
+    {% else %}
+        <a href="/signup">
+            <div class="action_space border-blue">
+                <h4>Sign up</h4>
+            </div>
+        </a>
+        <a href="/login">
+            <div class="action_space border-blue">
+                <h4>Login</h4>
+            </div>
+        </a>
+    {% endif %}
     {% block home_content %}{% endblock %}
 </main>
 

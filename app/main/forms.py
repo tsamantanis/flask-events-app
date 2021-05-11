@@ -6,7 +6,7 @@ from wtforms import (
     FloatField,
 )
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from wtforms.validators import DataRequired, Length, NumberRange
+from wtforms.validators import DataRequired, Length, NumberRange, ValidationError
 from models import Event, Equipment, User
 
 class EventForm(FlaskForm):

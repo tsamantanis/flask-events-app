@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<main class="row">
+    <div class="col-12">
+        <h1>Login</h1>
+    </div>
+
+    <form class="col-12 col-md-6 col-lg-4" action="/signup" method="POST">
+        {{ form.csrf_token }}
+        <div class="row">
+            <div class="col-12 d-flex">
+                {{ form.username.label }}
+                {{ form.username(class_="d-block") }}
+            </div>
+            <div class="col-12 d-flex">
+                {{ form.password.label }}
+                {{ form.password(class_="d-block") }}
+            </div>
+            <div class="col-12">
+                 <br  />
+                 {{ form.submit(class_="button button-submit btn-block") }}
+            </div>
+        </div>
+    </form>
+</main>
+
+{% endblock content %}
