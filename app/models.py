@@ -5,17 +5,17 @@ class Event(db.Model):
     """Event model."""
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', back_populates='events')
+    equipment_id = db.Column(db.Integer, db.ForeignKey('equipment.id'), nullable=False)
     equipment = db.relationship('Equipment', back_populates='event')
-    created_by_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    created_by = db.relationship("User")
 
 class Equipment(db.Model):
     """Equipment model."""
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
-    event = db.relationship('User', back_populates='event')
+    event = db.relationship('Event', back_populates='equipment')
 
 class User(UserMixin, db.Model):
     """User model"""
