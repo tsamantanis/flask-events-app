@@ -30,7 +30,7 @@ def create_user():
     db.session.add(user)
     db.session.commit()
 
-class MainTests(unittest.TestCase):
+class AuthTests(unittest.TestCase):
  
     def setUp(self):
         """Executed prior to each test."""

@@ -30,9 +30,6 @@ class Equipment(db.Model):
             "13:00-15:00": "",
             "15:00-17:00": ""
         }
-        print("date input: " + str(date_input))
-        all_events = Event.query.filter_by(equipment_id = self.id, date = date_input).all()
-        print(all_events)
         for event_i in Event.query.filter_by(equipment_id = self.id, date = date_input).all():
             event = Event(
                 title = event_i.title,
