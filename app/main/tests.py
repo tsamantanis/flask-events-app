@@ -1,7 +1,8 @@
 import os
 import unittest
 
-from datetime import date
+from datetime import date, datetime
+import calendar
  
 from app import app, db, bcrypt
 from app.models import Equipment, Event, User
@@ -79,7 +80,7 @@ class MainTests(unittest.TestCase):
         db.create_all()
  
     def test_homepage(self):
-        """Test that the login / signup show up on the homepage."""
+        """Test the homepage."""
         create_user()
         login(self.app, 'me1', 'password')
         create_equipment()
@@ -101,6 +102,62 @@ class MainTests(unittest.TestCase):
         self.assertIn('New equipment', response_text)
         self.assertIn('Next Day', response_text)
         self.assertIn('Previous Day', response_text)
+
+    def test_homepage_next(self):
+        """Test the next day button on homepage."""
+        create_user()
+        login(self.app, 'me1', 'password')
+        create_equipment()
+        create_events()
+
+        response1 = self.app.get('/', follow_redirects=True)
+        self.assertEqual(response1.status_code, 200)
+        response_text = response1.get_data(as_text=True)
+        today = datetime.now().strftime('%Y-%m-%d')
+        month_range = calendar.monthrange(int(today[0:4]), int(today[5:7]))
+        date_current = date(int(today[0:4]), int(today[5:7]), int(today[8:10]))
+        self.assertIn(str(date_current.month) + "/" + str(date_current.day), response_text)
+        response2 = self.app.get('/get_calendar/' + str(date(int(today[0:4]), int(today[5:7]), int(today[8:10]) + 1 if int(today[8:10]) < month_range[1] else 1)))
+        response_text = response2.get_data(as_text=True)
+        self.assertIn(str(date_current.month) + "/" + str(date_current.day + 1), response_text)
+        self.assertEqual(response2.status_code, 200)
+        self.assertIn('Calendar', response_text)
+        self.assertIn('Logout', response_text)
+        self.assertIn('eq1', response_text)
+        self.assertIn('New equipment', response_text)
+        self.assertIn('Next Day', response_text)
+        self.assertIn('Previous Day', response_text)
+
+        self.assertNotIn('Example1', response_text)
+        self.assertNotIn('Example2', response_text)
+
+    def test_homepage_previous(self):
+        """Test the next day button on homepage."""
+        create_user()
+        login(self.app, 'me1', 'password')
+        create_equipment()
+        create_events()
+
+        response1 = self.app.get('/', follow_redirects=True)
+        self.assertEqual(response1.status_code, 200)
+        response_text = response1.get_data(as_text=True)
+        today = datetime.now().strftime('%Y-%m-%d')
+        prev_month_range = calendar.monthrange(int(today[0:4]), int(today[5:7]) - 1)
+        date_current = date(int(today[0:4]), int(today[5:7]), int(today[8:10]))
+        self.assertIn(str(date_current.month) + "/" + str(date_current.day), response_text)
+        response2 = self.app.get('/get_calendar/' + str(date(int(today[0:4]), int(today[5:7]), int(today[8:10]) - 1 if int(today[8:10]) > 1 else prev_month_range[1])))
+        response_text = response2.get_data(as_text=True)
+        self.assertIn(str(date_current.month) + "/" + str(date_current.day - 1), response_text)
+        self.assertEqual(response2.status_code, 200)
+        self.assertIn('Calendar', response_text)
+        self.assertIn('Logout', response_text)
+        self.assertIn('eq1', response_text)
+        self.assertIn('New equipment', response_text)
+        self.assertIn('Next Day', response_text)
+        self.assertIn('Previous Day', response_text)
+
+        self.assertNotIn('Example1', response_text)
+        self.assertNotIn('Example2', response_text)
  
     def test_new_equipment_page(self):
         """Test that the new equipment page shows the form."""
