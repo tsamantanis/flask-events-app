@@ -19,7 +19,7 @@ def signup():
         db.session.commit()
         flash('Account Created.')
         print('created')
-        return redirect(url_for('auth.login'))
+        return redirect(url_for('main.home'))
     print(form.errors)
     return render_template('signup.html', form=form)
 

@@ -8,80 +8,34 @@
     </div>
 
     <form class="col-12 col-md-6"  method='POST'>
+        {{ form.csrf_token }}
         <div class="row">
             <div class="col-12 col-md-6">
-                <label>
-                    Title <br  />
-                    <input type="text" name="title" class="d-block"/>
-                </label>
+                {{ form.title.label }} <br />
+                {{ form.title(class_="d-block") }}
             </div>
             <div class="col-12 col-md-6">
-                <label>
-                    Employee <br  />
-                    <select name="employee"class="d-block">
-                        {% for employee in employees %}
-                            {% if employee._id == employee_id %}
-                                <option value={{employee._id}} selected>
-                                    {{employee.first_name + " " + employee.last_name}}
-                                </option>
-                            {% else %}
-                                <option value={{employee._id}}>
-                                    {{employee.first_name + " " + employee.last_name}}
-                                </option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-                </label>
+                {{ form.equipment.label }} <br />
+                {{ form.equipment(class_="d-block") }}
             </div>
         </div>
         <div class="row">
             <div class="col-12 col-md-6">
-                <label>
-                    Date <br  />
-                    <input type="date" name="date" min="{{ min_date.strftime('%Y-%m-%d') }}" max="{{ max_date.strftime('%Y-%m-%d') }}" class="d-block" value={{date_input}}>
-                </label>
+                {{ form.date.label }} <br />
+                {{ form.date(class_="d-block", min="{{ min_date.strftime('%Y-%m-%d') }}", max="{{ max_date.strftime('%Y-%m-%d') }}", placeholder="YYYY-mm-dd", default="{{ form.date.default }}") }}
             </div>
             <div class="col-12 col-md-6">
-                <label>
-                    Timeslot <br  />
-                    <select name="timeslot" class="d-block">
-                        {% for timeslot in timeslots %}
-                            {% if timeslot == timeslot_input %}
-                                <option value={{timeslot | string() }} selected>
-                                    {{timeslot}}
-                                </option>
-                            {% else %}
-                                <option value={{timeslot | string() }}>
-                                    {{timeslot}}
-                                </option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-                </label>
+                {{ form.timeslot.label }} <br />
+                {{ form.timeslot(class_="d-block") }}
             </div>
         </div>
         <div class="row">
             <div class="col-12 col-md-6">
-                <label>
-                    Details <br  />
-                    <textarea rows="3" name="details" class="d-block"></textarea>
-                </label>
-            </div>
-            <div class="col-12 col-md-6">
-                <label>
-                    Color <br  />
-                    <input type="color" name="color" class="d-block" list="presetColors">
-                    <datalist id="presetColors">
-                        <option>#00A88B</option>/>
-                        <option>#307FE2</option>
-                        <option>#6A6DCD</option>
-                        <option>#C340A1</option>
-                        <option>#D93535</option>
-                    </datalist>
-                </label>
+                {{ form.color.label }} <br />
+                {{ form.color(class_="d-block") }}
             </div>
         </div>
-        <input type="submit" class="button button-availability btn-block" value="Submit">
+        {{ form.submit(class_="button button-availability btn-block") }}
     </form>
 </main>
 

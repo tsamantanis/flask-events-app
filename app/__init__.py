@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 app.secret_key = os.urandom(24)
 
-db = SQLAlchemy(app)
+db = SQLAlchemy(app, session_options={"autoflush": False})
 
 ###########################
 # Authentication

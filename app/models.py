@@ -7,7 +7,7 @@ class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), nullable=False)
     color = db.Column(db.String(7), nullable=False)
-    date = db.Column(db.DateTime, nullable=False)
+    date = db.Column(db.String(10), nullable=False)
     timeslot = db.Column(db.String(11), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', back_populates='events')
@@ -30,16 +30,19 @@ class Equipment(db.Model):
             "13:00-15:00": "",
             "15:00-17:00": ""
         }
-        for event_i in Event.query.filter_by(equipment_id = self.id, date = str(date_input)):
+        print("date input: " + str(date_input))
+        all_events = Event.query.filter_by(equipment_id = self.id, date = date_input).all()
+        print(all_events)
+        for event_i in Event.query.filter_by(equipment_id = self.id, date = date_input).all():
             event = Event(
-                title = event_i['title'],
-                equipment = event_i['equipment'],
-                color = event_i['color'],
-                date = event_i['date'],
-                timeslot = event_i['timeslot'],
-                user = event_i['user']
+                title = event_i.title,
+                equipment = event_i.equipment,
+                color = event_i.color,
+                date = event_i.date,
+                timeslot = event_i.timeslot,
+                user = event_i.user
             )
-            event.id = str(event_i['id'])
+            event.id = str(event_i.id)
             timeslot_events[event.timeslot] = event
         return timeslot_events
 

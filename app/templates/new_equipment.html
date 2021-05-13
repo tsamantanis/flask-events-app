@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<main class="row">
+    <div class="col-12 col-md-8">
+        <h1>New Equipment</h1>
+    </div>
+
+    <form class="col-12 col-md-6"  method='POST' action="{{ url_for('main.new_equipment') }}">
+        {{ form.csrf_token }}
+        <div class="row">
+            <div class="col-12 col-md-6">
+                {{ form.name.label }} <br />
+                {{ form.name(class_="d-block") }}
+            </div>
+            <div class="col-12 col-md-6">
+                {{ form.quantity.label }} <br />
+                {{ form.quantity(class_="d-block") }}
+            </div>
+        </div>
+        {{ form.submit(class_="button button-availability btn-block") }}
+    </form>
+</main>
+
+{% endblock content %}

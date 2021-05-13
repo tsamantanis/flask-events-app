@@ -50,6 +50,7 @@ input {
     padding: 5px 5px 5px 10px;
     background: none;
     border: 2px solid white;
+    min-width: 200px;
 }
 
 textarea {
@@ -74,6 +75,8 @@ select {
     padding: 10px 5px 5px 10px;
     background: none;
     border: 2px solid white;
+    max-height: 4.5vh;
+    min-width: 200px;
 }
 
 input[type="date"] {
