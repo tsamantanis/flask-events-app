@@ -30,17 +30,19 @@ class Equipment(db.Model):
             "13:00-15:00": "",
             "15:00-17:00": ""
         }
-        for event_i in Event.query.filter_by(equipment_id = self.id, date = date_input).all():
-            event = Event(
-                title = event_i.title,
-                equipment = event_i.equipment,
-                color = event_i.color,
-                date = event_i.date,
-                timeslot = event_i.timeslot,
-                user = event_i.user
-            )
-            event.id = str(event_i.id)
-            timeslot_events[event.timeslot] = event
+        all_events = Event.query.filter_by(equipment_id = self.id, date = date_input).all()
+        if len(all_events) > 0:
+            for event_i in all_events:
+                event = Event(
+                    title = event_i.title,
+                    equipment = event_i.equipment,
+                    color = event_i.color,
+                    date = event_i.date,
+                    timeslot = event_i.timeslot,
+                    user = event_i.user
+                )
+                event.id = str(event_i.id)
+                timeslot_events[event.timeslot] = event
         return timeslot_events
 
 class User(UserMixin, db.Model):
