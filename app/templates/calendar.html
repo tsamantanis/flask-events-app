@@ -13,19 +13,17 @@
                         </div>
                     </a>
                 {% else %}
-                    <a href={{"/edit_event/" + value.id | string()}}>
-                        <div class="event_container" style="background: {{value.color}}">
-                            <div>
-                                <h3>{{value.title}}</h3>
-                                <p>
-                                    Quantity: {{item.quantity}}
-                                </p>
-                                <p>
-                                    {{value.timeslot}}
-                                </p>
-                            </div>
+                    <div class="event_container" style="background: {{value.color}}">
+                        <div>
+                            <h3>{{value.title}}</h3>
+                            <p>
+                                Quantity: {{item.quantity}}
+                            </p>
+                            <p>
+                                {{value.timeslot}}
+                            </p>
                         </div>
-                    </a>
+                    </div>
                 {% endif %}
             {% endfor %}
         </div>
